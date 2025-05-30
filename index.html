@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>HACKED BY H4X0R 414</title>
+<style>
+  /* ফুল স্ক্রিন কালো ব্যাকগ্রাউন্ড */
+  body, html {
+    margin: 0; padding: 0; height: 100%; overflow: hidden;
+    background: black;
+    color: #00ff00;
+    font-family: 'Courier New', Courier, monospace;
+    position: relative;
+  }
+
+  /* Matrix Canvas পুরো পেজ জুড়ে */
+  #matrix {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+  }
+
+  /* মাঝখানে টেক্সট */
+  #hackedText {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3.5em;
+    font-weight: bold;
+    color: #00ff00;
+    z-index: 2;
+    text-shadow:
+      0 0 5px #00ff00,
+      0 0 10px #00ff00,
+      0 0 20px #00ff00,
+      0 0 40px #0f0;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+<div id="hackedText">HACKED BY H4X0R 414</div>
+
+<script>
+  const canvas = document.getElementById('matrix');
+  const ctx = canvas.getContext('2d');
+
+  // Full screen canvas
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()-_=+[]{}|;:,.<>?';
+  const fontSize = 16;
+  const columns = Math.floor(canvas.width / fontSize);
+  const drops = [];
+
+  for(let x = 0; x < columns; x++) drops[x] = Math.random() * canvas.height;
+
+  function draw() {
+    // Transparent BG for trail effect
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = '#0F0'; // green letters
+    ctx.font = fontSize + 'px monospace';
+
+    for(let i = 0; i < drops.length; i++) {
+      const text = letters.charAt(Math.floor(Math.random() * letters.length));
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+      // reset drop to top randomly
+      if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  }
+
+  setInterval(draw, 35);
+
+  // ৩০ সেকেন্ড পর স্ক্রিন ক্লিয়ার করে সাদা ফাঁকা করে দিবে
+  setTimeout(() => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    document.getElementById('hackedText').style.display = 'none';
+    // Optionally, কালো স্ক্রিন ফাঁকা রাখবে
+    ctx.fillStyle = 'black';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+  }, 30000);
+
+  // উইন্ডো রিসাইজ হলে canvas রিসাইজ করবে
+  window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  });
+</script>
+
+</body>
+</html>
